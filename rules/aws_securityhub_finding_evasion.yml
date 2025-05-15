@@ -21,8 +21,8 @@ query_text: |-
     UpdateInsight
   )
   | stats
-    min(timestamp) as firstTime,
-    max(timestamp) as lastTime,
+    min(@scnr.datetime) as firstTime,
+    max(@scnr.datetime) as lastTime,
     count() as eventCount
     by
     userIdentity.arn,
