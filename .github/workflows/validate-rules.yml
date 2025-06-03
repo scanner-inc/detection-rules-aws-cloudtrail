@@ -1,0 +1,18 @@
+name: Validate Detection Rules
+
+on: # On any pull request, or any push directly to main:
+  push:
+    branches: [ main ]
+  pull_request:
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: scanner-inc/validate-detection-rules@v0.1.0
+        with:
+          scanner_api_url: '${{ secrets.SCANNER_RULE_VALIDATION_API_URL }}'
+          scanner_api_key: '${{ secrets.SCANNER_RULE_VALIDATION_API_KEY }}'
+          dir: 'rules'
+          recursive: true
