@@ -31,6 +31,6 @@ run_frequency_s: 60
 event_sink_keys:
 - informational_severity_alerts
 tags:
-- techniques.t1089.disabling_security_tools
+- techniques.t1562.impair_defenses
 - source.cloudtrail
 - tactics.ta0005.defense_evasion

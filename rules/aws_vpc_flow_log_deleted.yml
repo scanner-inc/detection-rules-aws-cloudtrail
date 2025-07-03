@@ -28,6 +28,6 @@ run_frequency_s: 60
 event_sink_keys:
 - informational_severity_alerts
 tags:
-- techniques.t1070.indicator_removal
+- techniques.t1070.indicator_removal_on_host
 - source.cloudtrail
 - tactics.ta0005.defense_evasion

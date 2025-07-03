@@ -29,5 +29,5 @@ event_sink_keys:
 - medium_severity_alerts
 tags:
 - source.cloudtrail
-- techniques.t1535.unused_or_unsupported_cloud_regions
+- techniques.t1535.unused_unsupported_cloud_regions
 - tactics.ta0005.defense_evasion
