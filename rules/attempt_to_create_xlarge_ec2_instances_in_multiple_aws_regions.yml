@@ -18,7 +18,7 @@ description: |-
 enabled: true
 severity: High
 query_text: |-
-  %ingest.source_type:cloudtrail
+  %ingest.source_type:"aws:cloudtrail"
   eventName:(CreateInstance RunInstances)
   requestParameters.instanceType:*xlarge*
   | stats countdistinct(awsRegion) as num_distinct_values by userIdentity.arn

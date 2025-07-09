@@ -19,7 +19,7 @@ description: |-
 enabled: true
 severity: High
 query_text: |-
-  %ingest.source_type:cloudtrail
+  %ingest.source_type:"aws:cloudtrail"
   eventName:CreateTrustAnchor
   eventSource:rolesanywhere.amazonaws.com
   | groupbycount(userIdentity.arn)
