@@ -2,21 +2,23 @@
 name: AWS S3 Bucket ACL made public
 description: |-
   ## Goal
-  Detect when an S3 bucket policy is made public.
+  Detect when an S3 bucket ACL is made public.
 
   ## Strategy
-  Monitor CloudTrail API calls to detect when an AWS bucket is made public:
+  Monitor CloudTrail API calls to detect when an AWS S3 bucket ACL is made public via `PutBucketAcl`:
 
-  * PutBucketAcl
+  Inspect for either of the following conditions:
+  1. AccessControlPolicy.AccessControlList.Grant.Grantee.URI contains:
+     * `http://acs.amazonaws.com/groups/global/AuthenticatedUsers`
+     * `http://acs.amazonaws.com/groups/global/AllUsers`
+  2. x-amz-acl parameter set to:
+     * `public-read`
+     * `public-read-write`
 
-  Inspect the AccessControlPolicy.AccessControlList.Grant.Grantee.URI array for:
-  * `http://acs.amazonaws.com/groups/global/AuthenticatedUsers`
-  * `http://acs.amazonaws.com/groups/global/AllUsers`
-
-  A match with either indicates the S3 bucket policy is public.
+  A match with any of these conditions indicates the S3 bucket ACL is public.
 
   ## Triage and response
-  1. Determine if the user identity is expected to perform the event name API call.
+  1. Determine if the user identity is expected to perform the PutBucketAcl API call.
   2. Contact the principal owner to confirm if this API call was made by the user.
   3. If the API call was unauthorized, rotate the user credentials and investigate other successful API accesses:
      * Rotate the credentials.
@@ -24,12 +26,19 @@ description: |-
 enabled: true
 severity: High
 query_text: |-
-  %ingest.source_type:"aws:cloudtrail"
-  eventName:PutBucketAcl
-  (not errorCode:*)
-  requestParameters.AccessControlPolicy.AccessControlList.Grant.Grantee.URI:("http://acs.amazonaws.com/groups/global/AuthenticatedUsers" "http://acs.amazonaws.com/groups/global/AllUsers")
-  | groupbycount(requestParameters.bucketName)
+  %ingest.source_type: "aws:cloudtrail"
+  eventName: PutBucketAcl
+  ( not errorCode: * )
+  (
+    requestParameters.AccessControlPolicy.AccessControlList.Grant.Grantee.URI: (
+      "http://acs.amazonaws.com/groups/global/AuthenticatedUsers"
+      "http://acs.amazonaws.com/groups/global/AllUsers"
+    ) or
+    requestParameters.x-amz-acl = ( "public-read" "public-read-write" )
+  )
+  | groupbycount ( requestParameters.bucketName )
   | where @q.count > 0
+
 time_range_s: 300
 run_frequency_s: 60
 event_sink_keys:
@@ -38,3 +47,36 @@ tags:
 - source.cloudtrail
 - techniques.t1562.impair_defenses
 - tactics.ta0005.defense_evasion
+tests:
+  - name: Test alert is triggered when S3 bucket ACL made public via x-amz-acl public-read
+    now_timestamp: "2024-08-21T00:03:00.000Z"
+    dataset_inline: |
+      {"timestamp":"2024-08-21T00:02:30.000Z","%ingest.source_type":"aws:cloudtrail","eventName":"PutBucketAcl","requestParameters":{"bucketName":"my-bucket","x-amz-acl":"public-read"},"userIdentity":{"arn":"arn:aws:iam::123456789012:user/JohnDoe"}}
+      {"timestamp":"2024-08-21T00:02:00.000Z","%ingest.source_type":"aws:cloudtrail","eventName":"GetObject","requestParameters":{"bucketName":"my-bucket","key":"exampleobject"},"userIdentity":{"arn":"arn:aws:iam::123456789012:user/JohnDoe"}}
+    expected_detection_result: true
+  - name: Test alert is triggered with public-read-write ACL
+    now_timestamp: "2024-08-21T00:03:00.000Z"
+    dataset_inline: |
+      {"timestamp":"2024-08-21T00:02:30.000Z","%ingest.source_type":"aws:cloudtrail","eventName":"PutBucketAcl","requestParameters":{"bucketName":"my-bucket","x-amz-acl":"public-read-write"},"userIdentity":{"arn":"arn:aws:iam::123456789012:user/JohnDoe"}}
+    expected_detection_result: true
+  - name: Test no alert when PutBucketAcl has error
+    now_timestamp: "2024-08-21T00:03:00.000Z"
+    dataset_inline: |
+      {"timestamp":"2024-08-21T00:02:30.000Z","%ingest.source_type":"aws:cloudtrail","eventName":"PutBucketAcl","errorCode":"AccessDenied","requestParameters":{"bucketName":"my-bucket","x-amz-acl":"public-read"},"userIdentity":{"arn":"arn:aws:iam::123456789012:user/JohnDoe"}}
+    expected_detection_result: false
+  - name: Test no alert when bucket ACL not made public
+    now_timestamp: "2024-08-21T00:03:00.000Z"
+    dataset_inline: |
+      {"timestamp":"2024-08-21T00:02:30.000Z","%ingest.source_type":"aws:cloudtrail","eventName":"PutBucketAcl","requestParameters":{"bucketName":"my-bucket","x-amz-acl":"private"},"userIdentity":{"arn":"arn:aws:iam::123456789012:user/JohnDoe"}}
+      {"timestamp":"2024-08-21T00:02:00.000Z","%ingest.source_type":"aws:cloudtrail","eventName":"GetObject","requestParameters":{"bucketName":"my-bucket","key":"exampleobject"},"userIdentity":{"arn":"arn:aws:iam::123456789012:user/JohnDoe"}}
+    expected_detection_result: false
+  - name: Test alert is triggered when S3 bucket ACL made public with AllUsers URI
+    now_timestamp: "2024-08-21T00:03:00.000Z"
+    dataset_inline: |
+      {"timestamp":"2024-08-21T00:02:30.000Z","%ingest.source_type":"aws:cloudtrail","eventName":"PutBucketAcl","requestParameters":{"bucketName":"my-bucket","AccessControlPolicy.AccessControlList.Grant.Grantee.URI":"http://acs.amazonaws.com/groups/global/AllUsers"},"userIdentity":{"arn":"arn:aws:iam::123456789012:user/JohnDoe"}}
+    expected_detection_result: true
+  - name: Test alert is triggered when S3 bucket ACL made public with AuthenticatedUsers URI
+    now_timestamp: "2024-08-21T00:03:00.000Z"
+    dataset_inline: |
+      {"timestamp":"2024-08-21T00:02:30.000Z","%ingest.source_type":"aws:cloudtrail","eventName":"PutBucketAcl","requestParameters":{"bucketName":"my-bucket","AccessControlPolicy.AccessControlList.Grant.Grantee.URI":"http://acs.amazonaws.com/groups/global/AuthenticatedUsers"},"userIdentity":{"arn":"arn:aws:iam::123456789012:user/JohnDoe"}}
+    expected_detection_result: true
