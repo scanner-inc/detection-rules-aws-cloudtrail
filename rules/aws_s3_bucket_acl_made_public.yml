@@ -27,7 +27,8 @@ query_text: |-
   %ingest.source_type:"aws:cloudtrail"
   eventName:PutBucketAcl
   (not errorCode:*)
-  requestParameters.AccessControlPolicy.AccessControlList.Grant.Grantee.URI:("http://acs.amazonaws.com/groups/global/AuthenticatedUsers" "http://acs.amazonaws.com/groups/global/AllUsers")
+  requestParameters.AccessControlPolicy.AccessControlList.Grant.Grantee.URI:("http://acs.amazonaws.com/groups/global/AuthenticatedUsers" "http://acs.amazonaws.com/groups/global/AllUsers") or 
+  (requestParameters.x-amz-acl:"public-read" or requestParameters.x-amz-acl:"public-read-write")
   | groupbycount(requestParameters.bucketName)
   | where @q.count > 0
 time_range_s: 300
