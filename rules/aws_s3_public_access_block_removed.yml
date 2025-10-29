@@ -18,7 +18,7 @@ severity: High
 query_text: |-
   %ingest.source_type:"aws:cloudtrail"
   (not errorCode:*)
-  eventName:DeleteAccountPublicAccessBlock
+  eventName:DeleteAccountPublicAccessBlock or (eventName:PutAccountPublicAccessBlock and requestParameters.publicAccessBlock:"")
   | groupbycount(userIdentity.arn)
   | where @q.count > 0
 time_range_s: 300
