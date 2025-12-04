@@ -16,7 +16,7 @@ query_text: |-
   %ingest.source_type:"aws:cloudtrail"
   eventSource:waf*.amazonaws.com
   eventName:UpdateWebACL
-  (not userAgent:(\\APN\\/* cloudformation.amazonaws.com))
+  (not userAgent:("\\APN\\/*" cloudformation.amazonaws.com))
   | groupbycount(userIdentity.arn)
   | where @q.count > 0
 time_range_s: 300
