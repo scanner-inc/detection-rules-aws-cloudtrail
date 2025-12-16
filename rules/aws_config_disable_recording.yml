@@ -11,7 +11,7 @@ description: |-
   * Valid change in AWS Config Service
 severity: High
 query_text: |-
-  %ingest.source_type="aws:cloudtrail"
+  @scnr.source_type="aws:cloudtrail"
   eventSource="config.amazonaws.com"
   eventName=(DeleteDeliveryChannel StopConfigurationRecorder)
   | stats

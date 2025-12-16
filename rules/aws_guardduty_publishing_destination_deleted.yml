@@ -18,7 +18,7 @@ description: |-
 enabled: true
 severity: Medium
 query_text: |-
-  %ingest.source_type:"aws:cloudtrail"
+  @scnr.source_type:"aws:cloudtrail"
   eventName:DeletePublishingDestination
   | groupbycount(userIdentity.arn)
   | where @q.count > 0

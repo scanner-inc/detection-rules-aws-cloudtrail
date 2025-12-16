@@ -14,7 +14,7 @@ description: |-
   * Unknown
 severity: Medium
 query_text: |-
-  %ingest.source_type="aws:cloudtrail"
+  @scnr.source_type="aws:cloudtrail"
   eventSource="elasticfilesystem.amazonaws.com"
   eventName="DeleteFileSystem"
   | stats

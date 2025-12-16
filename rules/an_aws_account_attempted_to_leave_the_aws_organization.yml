@@ -23,7 +23,7 @@ description: |-
 enabled: true
 severity: High
 query_text: |-
-  %ingest.source_type:"aws:cloudtrail"
+  @scnr.source_type:"aws:cloudtrail"
   eventName:LeaveOrganization
   eventSource:organizations.amazonaws.com
   | groupbycount(userIdentity.arn)

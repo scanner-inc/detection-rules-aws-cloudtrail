@@ -12,7 +12,7 @@ description: |-
   * DEV, UAT, SAT environment. You should apply this rule with PROD environment only.
 severity: High
 query_text: |-
-  %ingest.source_type="aws:cloudtrail"
+  @scnr.source_type="aws:cloudtrail"
   eventSource="securityhub.amazonaws.com"
   eventName=(
     BatchUpdateFindings
@@ -41,18 +41,18 @@ tests:
   - name: Test alert is triggered when SecurityHub findings modified
     now_timestamp: "2024-08-21T00:03:00.000Z"
     dataset_inline: |
-      {"timestamp":"2024-08-21T00:02:30.000Z","%ingest.source_type":"aws:cloudtrail","eventSource":"securityhub.amazonaws.com","eventName":"BatchUpdateFindings","userIdentity":{"arn":"arn:aws:iam::123456789012:user/JohnDoe"},"awsRegion":"us-west-2"}
-      {"timestamp":"2024-08-21T00:02:00.000Z","%ingest.source_type":"aws:cloudtrail","eventSource":"s3.amazonaws.com","eventName":"GetObject","userIdentity":{"arn":"arn:aws:iam::123456789012:user/JohnDoe"},"requestParameters":{"bucketName":"mybucket","key":"exampleobject"}}
-      {"timestamp":"2024-08-21T00:01:50.000Z","%ingest.source_type":"aws:cloudtrail","eventSource":"securityhub.amazonaws.com","eventName":"UpdateFindings","userIdentity":{"arn":"arn:aws:iam::123456789012:user/JohnDoe"},"awsRegion":"us-west-2"}
-      {"timestamp":"2024-08-21T00:01:30.000Z","%ingest.source_type":"aws:cloudtrail","eventSource":"securityhub.amazonaws.com","eventName":"DeleteInsight","userIdentity":{"arn":"arn:aws:iam::123456789012:user/JohnDoe"},"awsRegion":"us-west-2"}
-      {"timestamp":"2024-08-21T00:01:20.000Z","%ingest.source_type":"aws:cloudtrail","eventSource":"lambda.amazonaws.com","eventName":"InvokeFunction","userIdentity":{"arn":"arn:aws:iam::123456789012:user/JohnDoe"},"requestParameters":{"functionName":"my-function"}}
-      {"timestamp":"2024-08-21T00:01:10.000Z","%ingest.source_type":"aws:cloudtrail","eventSource":"securityhub.amazonaws.com","eventName":"UpdateInsight","userIdentity":{"arn":"arn:aws:iam::123456789012:user/JohnDoe"},"awsRegion":"us-west-2"}
+      {"timestamp":"2024-08-21T00:02:30.000Z","@scnr.source_type":"aws:cloudtrail","eventSource":"securityhub.amazonaws.com","eventName":"BatchUpdateFindings","userIdentity":{"arn":"arn:aws:iam::123456789012:user/JohnDoe"},"awsRegion":"us-west-2"}
+      {"timestamp":"2024-08-21T00:02:00.000Z","@scnr.source_type":"aws:cloudtrail","eventSource":"s3.amazonaws.com","eventName":"GetObject","userIdentity":{"arn":"arn:aws:iam::123456789012:user/JohnDoe"},"requestParameters":{"bucketName":"mybucket","key":"exampleobject"}}
+      {"timestamp":"2024-08-21T00:01:50.000Z","@scnr.source_type":"aws:cloudtrail","eventSource":"securityhub.amazonaws.com","eventName":"UpdateFindings","userIdentity":{"arn":"arn:aws:iam::123456789012:user/JohnDoe"},"awsRegion":"us-west-2"}
+      {"timestamp":"2024-08-21T00:01:30.000Z","@scnr.source_type":"aws:cloudtrail","eventSource":"securityhub.amazonaws.com","eventName":"DeleteInsight","userIdentity":{"arn":"arn:aws:iam::123456789012:user/JohnDoe"},"awsRegion":"us-west-2"}
+      {"timestamp":"2024-08-21T00:01:20.000Z","@scnr.source_type":"aws:cloudtrail","eventSource":"lambda.amazonaws.com","eventName":"InvokeFunction","userIdentity":{"arn":"arn:aws:iam::123456789012:user/JohnDoe"},"requestParameters":{"functionName":"my-function"}}
+      {"timestamp":"2024-08-21T00:01:10.000Z","@scnr.source_type":"aws:cloudtrail","eventSource":"securityhub.amazonaws.com","eventName":"UpdateInsight","userIdentity":{"arn":"arn:aws:iam::123456789012:user/JohnDoe"},"awsRegion":"us-west-2"}
     expected_detection_result: true
   - name: Test no alert is triggered when SecurityHub findings not modified
     now_timestamp: "2024-08-21T00:03:00.000Z"
     dataset_inline: |
-      {"timestamp":"2024-08-21T00:02:30.000Z","%ingest.source_type":"aws:cloudtrail","eventSource":"s3.amazonaws.com","eventName":"GetObject","userIdentity":{"arn":"arn:aws:iam::123456789012:user/JohnDoe"},"requestParameters":{"bucketName":"mybucket","key":"exampleobject"}}
-      {"timestamp":"2024-08-21T00:02:00.000Z","%ingest.source_type":"aws:cloudtrail","eventSource":"lambda.amazonaws.com","eventName":"InvokeFunction","userIdentity":{"arn":"arn:aws:iam::123456789012:user/JohnDoe"},"requestParameters":{"functionName":"my-function"}}
-      {"timestamp":"2024-08-21T00:01:50.000Z","%ingest.source_type":"aws:cloudtrail","eventSource":"dynamodb.amazonaws.com","eventName":"PutItem","userIdentity":{"arn":"arn:aws:iam::123456789012:user/JohnDoe"},"requestParameters":{"tableName":"my-table"}}
-      {"timestamp":"2024-08-21T00:01:20.000Z","%ingest.source_type":"aws:cloudtrail","eventSource":"rds.amazonaws.com","eventName":"CreateDBInstance","userIdentity":{"arn":"arn:aws:iam::123456789012:user/JohnDoe"},"requestParameters":{"dBInstanceIdentifier":"mydb"}}
+      {"timestamp":"2024-08-21T00:02:30.000Z","@scnr.source_type":"aws:cloudtrail","eventSource":"s3.amazonaws.com","eventName":"GetObject","userIdentity":{"arn":"arn:aws:iam::123456789012:user/JohnDoe"},"requestParameters":{"bucketName":"mybucket","key":"exampleobject"}}
+      {"timestamp":"2024-08-21T00:02:00.000Z","@scnr.source_type":"aws:cloudtrail","eventSource":"lambda.amazonaws.com","eventName":"InvokeFunction","userIdentity":{"arn":"arn:aws:iam::123456789012:user/JohnDoe"},"requestParameters":{"functionName":"my-function"}}
+      {"timestamp":"2024-08-21T00:01:50.000Z","@scnr.source_type":"aws:cloudtrail","eventSource":"dynamodb.amazonaws.com","eventName":"PutItem","userIdentity":{"arn":"arn:aws:iam::123456789012:user/JohnDoe"},"requestParameters":{"tableName":"my-table"}}
+      {"timestamp":"2024-08-21T00:01:20.000Z","@scnr.source_type":"aws:cloudtrail","eventSource":"rds.amazonaws.com","eventName":"CreateDBInstance","userIdentity":{"arn":"arn:aws:iam::123456789012:user/JohnDoe"},"requestParameters":{"dBInstanceIdentifier":"mydb"}}
     expected_detection_result: false

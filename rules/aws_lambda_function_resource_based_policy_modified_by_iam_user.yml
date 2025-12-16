@@ -19,7 +19,7 @@ description: |-
 enabled: true
 severity: Low
 query_text: |-
-  %ingest.source_type:"aws:cloudtrail"
+  @scnr.source_type:"aws:cloudtrail"
   eventSource:lambda.amazonaws.com
   eventName:AddPermission*
   userIdentity.type:IAMUser

@@ -11,7 +11,7 @@ description: |-
   * Valid usage of S3 browser with accidental creation of default Inline IAM policy without changing default S3 bucket name placeholder value
 severity: High
 query_text: |-
-  %ingest.source_type="aws:cloudtrail"
+  @scnr.source_type="aws:cloudtrail"
   eventSource="iam.amazonaws.com"
   eventName="PutUserPolicy"
   userAgent: 'S3 Browser'
@@ -44,14 +44,14 @@ tests:
   - name: Test IAM S3Browser templated S3 bucket policy creation present
     now_timestamp: "2024-08-21T00:03:00.000Z"
     dataset_inline: |
-      {"timestamp":"2024-08-21T00:02:30.000Z","%ingest.source_type":"aws:cloudtrail","eventSource":"iam.amazonaws.com","eventName":"PutUserPolicy","userAgent":"S3 Browser","requestParameters":{"policyDocument":"{\"Version\":\"2012-10-17\",\"Statement\":[{\"Effect\":\"Allow\",\"Action\":\"s3:GetObject\",\"Resource\":\"arn:aws:s3:::<YOUR-BUCKET-NAME>/*\"}]}"}}
-      {"timestamp":"2024-08-21T00:01:50.000Z","%ingest.source_type":"aws:cloudtrail","eventSource":"s3.amazonaws.com","eventName":"GetObject","userIdentity":{"arn":"arn:aws:iam::123456789012:user/JohnDoe"},"requestParameters":{"bucketName":"mybucket","key":"exampleobject"}}
-      {"timestamp":"2024-08-21T00:00:00.000Z","%ingest.source_type":"aws:cloudtrail","eventSource":"lambda.amazonaws.com","eventName":"InvokeFunction","userIdentity":{"arn":"arn:aws:iam::123456789012:user/JohnDoe"},"requestParameters":{"functionName":"my-function"}}
+      {"timestamp":"2024-08-21T00:02:30.000Z","@scnr.source_type":"aws:cloudtrail","eventSource":"iam.amazonaws.com","eventName":"PutUserPolicy","userAgent":"S3 Browser","requestParameters":{"policyDocument":"{\"Version\":\"2012-10-17\",\"Statement\":[{\"Effect\":\"Allow\",\"Action\":\"s3:GetObject\",\"Resource\":\"arn:aws:s3:::<YOUR-BUCKET-NAME>/*\"}]}"}}
+      {"timestamp":"2024-08-21T00:01:50.000Z","@scnr.source_type":"aws:cloudtrail","eventSource":"s3.amazonaws.com","eventName":"GetObject","userIdentity":{"arn":"arn:aws:iam::123456789012:user/JohnDoe"},"requestParameters":{"bucketName":"mybucket","key":"exampleobject"}}
+      {"timestamp":"2024-08-21T00:00:00.000Z","@scnr.source_type":"aws:cloudtrail","eventSource":"lambda.amazonaws.com","eventName":"InvokeFunction","userIdentity":{"arn":"arn:aws:iam::123456789012:user/JohnDoe"},"requestParameters":{"functionName":"my-function"}}
     expected_detection_result: true
   - name: Test no threat present
     now_timestamp: "2024-08-21T00:03:00.000Z"
     dataset_inline: |
-      {"timestamp":"2024-08-21T00:01:50.000Z","%ingest.source_type":"aws:cloudtrail","eventSource":"s3.amazonaws.com","eventName":"GetObject","userIdentity":{"arn":"arn:aws:iam::123456789012:user/JohnDoe"},"requestParameters":{"bucketName":"mybucket","key":"exampleobject"}}
-      {"timestamp":"2024-08-21T00:00:00.000Z","%ingest.source_type":"aws:cloudtrail","eventSource":"lambda.amazonaws.com","eventName":"InvokeFunction","userIdentity":{"arn":"arn:aws:iam::123456789012:user/JohnDoe"},"requestParameters":{"functionName":"my-function"}}
-      {"timestamp":"2024-08-21T00:00:00.000Z","%ingest.source_type":"aws:cloudtrail","eventSource":"dynamodb.amazonaws.com","eventName":"PutItem","userIdentity":{"arn":"arn:aws:iam::123456789012:user/JohnDoe"},"requestParameters":{"tableName":"my-table"}}
+      {"timestamp":"2024-08-21T00:01:50.000Z","@scnr.source_type":"aws:cloudtrail","eventSource":"s3.amazonaws.com","eventName":"GetObject","userIdentity":{"arn":"arn:aws:iam::123456789012:user/JohnDoe"},"requestParameters":{"bucketName":"mybucket","key":"exampleobject"}}
+      {"timestamp":"2024-08-21T00:00:00.000Z","@scnr.source_type":"aws:cloudtrail","eventSource":"lambda.amazonaws.com","eventName":"InvokeFunction","userIdentity":{"arn":"arn:aws:iam::123456789012:user/JohnDoe"},"requestParameters":{"functionName":"my-function"}}
+      {"timestamp":"2024-08-21T00:00:00.000Z","@scnr.source_type":"aws:cloudtrail","eventSource":"dynamodb.amazonaws.com","eventName":"PutItem","userIdentity":{"arn":"arn:aws:iam::123456789012:user/JohnDoe"},"requestParameters":{"tableName":"my-table"}}
     expected_detection_result: false

@@ -20,7 +20,7 @@ description: |-
 enabled: true
 severity: Low
 query_text: |-
-  %ingest.source_type:"aws:cloudtrail"
+  @scnr.source_type:"aws:cloudtrail"
   eventName:(CreateAccessEntry AssociateAccessPolicy)
   | stats countdistinct(requestParameters.name) as num_distinct_values by requestParameters.principalArn, recipientAccountId
   | where num_distinct_values > 5

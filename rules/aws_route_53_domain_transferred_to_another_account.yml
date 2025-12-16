@@ -11,7 +11,7 @@ description: |-
   * A domain may be transferred to another AWS account by a system or network administrator. Verify whether the user identity, user agent, and/or hostname should be making changes in your environment. Domain transfers from unfamiliar users or hosts should be investigated. If known behavior is causing false positives, it can be exempted from the rule.
 severity: Low
 query_text: |-
-  %ingest.source_type="aws:cloudtrail"
+  @scnr.source_type="aws:cloudtrail"
   eventSource="route53.amazonaws.com"
   eventName="TransferDomainToAnotherAwsAccount"
   | stats

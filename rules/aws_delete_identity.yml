@@ -11,7 +11,7 @@ description: |-
   * Unknown
 severity: Medium
 query_text: |-
-  %ingest.source_type="aws:cloudtrail"
+  @scnr.source_type="aws:cloudtrail"
   eventSource="ses.amazonaws.com"
   eventName="DeleteIdentity"
   | stats

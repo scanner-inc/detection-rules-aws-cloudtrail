@@ -15,7 +15,7 @@ description: |-
   * Authorized changes to the AWS account's identity provider
 severity: High
 query_text: |-
-  %ingest.source_type="aws:cloudtrail"
+  @scnr.source_type="aws:cloudtrail"
   eventSource=("sso-directory.amazonaws.com" "sso.amazonaws.com")
   eventName=(
     AssociateDirectory

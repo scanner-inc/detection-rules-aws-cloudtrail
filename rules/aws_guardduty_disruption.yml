@@ -11,7 +11,7 @@ description: |-
   * Valid change in the GuardDuty (e.g. to ignore internal scanners)
 severity: High
 query_text: |-
-  %ingest.source_type="aws:cloudtrail"
+  @scnr.source_type="aws:cloudtrail"
   eventSource="guardduty.amazonaws.com"
   eventName="CreateIPSet"
   | stats

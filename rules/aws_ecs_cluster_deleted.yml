@@ -16,7 +16,7 @@ description: |-
 enabled: true
 severity: Informational
 query_text: |-
-  %ingest.source_type:"aws:cloudtrail"
+  @scnr.source_type:"aws:cloudtrail"
   eventSource:ecs.amazonaws.com
   eventName:DeleteCluster
   | groupbycount(userIdentity.arn)

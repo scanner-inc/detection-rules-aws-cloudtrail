@@ -11,7 +11,7 @@ description: |-
   * Valid usage of S3 Browser for IAM LoginProfile listing and/or creation
 severity: High
 query_text: |-
-  %ingest.source_type="aws:cloudtrail"
+  @scnr.source_type="aws:cloudtrail"
   eventSource="iam.amazonaws.com"
   eventName=(GetLoginProfile CreateLoginProfile)
   userAgent:'S3 Browser'

@@ -11,7 +11,7 @@ description: |-
   * AWS administrator legitimately disabling bucket versioning
 severity: Medium
 query_text: |-
-  %ingest.source_type="aws:cloudtrail"
+  @scnr.source_type="aws:cloudtrail"
   eventSource="s3.amazonaws.com"
   eventName="PutBucketVersioning"
   requestParameters.VersioningConfiguration.Status: 'suspended'

@@ -11,7 +11,7 @@ description: |-
   * AWS Tasks That Require AWS Account Root User Credentials https://docs.aws.amazon.com/general/latest/gr/aws_tasks-that-require-root.html
 severity: Medium
 query_text: |-
-  %ingest.source_type="aws:cloudtrail"
+  @scnr.source_type="aws:cloudtrail"
   userIdentity.type=Root
   (not eventType=AwsServiceEvent)
   | stats

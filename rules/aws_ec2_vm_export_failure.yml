@@ -8,7 +8,7 @@ description: |-
   * https://docs.aws.amazon.com/vm-import/latest/userguide/vmexport.html#export-instance
 severity: Low
 query_text: |-
-  %ingest.source_type="aws:cloudtrail"
+  @scnr.source_type="aws:cloudtrail"
   eventName="CreateInstanceExportTask"
   eventSource="ec2.amazonaws.com"
   (not (errorMessage:* or errorCode:*))

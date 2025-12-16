@@ -16,7 +16,7 @@ description: |-
 enabled: true
 severity: Medium
 query_text: |-
-  %ingest.source_type:"aws:cloudtrail"
+  @scnr.source_type:"aws:cloudtrail"
   eventSource:ec2.amazonaws.com
   eventName:DisableEbsEncryptionByDefault
   | groupbycount(userIdentity.arn)

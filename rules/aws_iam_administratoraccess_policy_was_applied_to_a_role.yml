@@ -19,7 +19,7 @@ description: |-
 enabled: true
 severity: Medium
 query_text: |-
-  %ingest.source_type:"aws:cloudtrail"
+  @scnr.source_type:"aws:cloudtrail"
   eventSource:iam.amazonaws.com
   eventName:AttachRolePolicy
   requestParameters.policyArn:"arn:aws:iam::aws:policy/AdministratorAccess"

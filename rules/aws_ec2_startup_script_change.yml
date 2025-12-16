@@ -11,7 +11,7 @@ description: |-
   * Valid changes to the startup script
 severity: High
 query_text: |-
-  %ingest.source_type="aws:cloudtrail"
+  @scnr.source_type="aws:cloudtrail"
   eventSource="ec2.amazonaws.com"
   eventName="ModifyInstanceAttribute"
   requestParameters.attribute: 'userData'

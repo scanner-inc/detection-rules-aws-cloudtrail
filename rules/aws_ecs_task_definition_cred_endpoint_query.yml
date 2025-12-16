@@ -15,7 +15,7 @@ description: |-
   * Task Definition being modified to request credentials from the Task Metadata Service for valid reasons
 severity: Medium
 query_text: |-
-  %ingest.source_type="aws:cloudtrail"
+  @scnr.source_type="aws:cloudtrail"
   eventSource="ecs.amazonaws.com"
   eventName=(DescribeTaskDefinition RegisterTaskDefinition RunTask)
   requestParameters.containerDefinitions.command:'*AWS_CONTAINER_CREDENTIALS_RELATIVE_URI*'
