@@ -18,7 +18,7 @@ description: |-
 enabled: true
 severity: High
 query_text: |-
-  %ingest.source_type:"aws:cloudtrail"
+  @scnr.source_type:"aws:cloudtrail"
   eventName:(GetAccount ListServiceQuotas)
   eventSource:ses.amazonaws.com
   userIdentity.accessKeyId:AKIA*

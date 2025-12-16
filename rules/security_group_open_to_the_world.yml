@@ -21,7 +21,7 @@ description: |-
 enabled: true
 severity: Medium
 query_text: |-
-  %ingest.source_type:"aws:cloudtrail"
+  @scnr.source_type:"aws:cloudtrail"
   eventName:AuthorizeSecurityGroupIngress
   requestParameters.ipPermissions.items.ipRanges.items.cidrIp:("0.0.0.0/0" "::/0")
   | groupbycount(recipientAccountId)

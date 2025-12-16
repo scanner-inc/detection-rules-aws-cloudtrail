@@ -17,7 +17,7 @@ description: |-
 enabled: true
 severity: Low
 query_text: |-
-  %ingest.source_type:"aws:cloudtrail"
+  @scnr.source_type:"aws:cloudtrail"
   eventName:(DisableKey ScheduleKeyDeletion)
   | groupbycount(userIdentity.arn)
   | where @q.count > 0

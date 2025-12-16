@@ -21,7 +21,7 @@ description: |-
 enabled: true
 severity: Informational
 query_text: |-
-  %ingest.source_type:"aws:cloudtrail"
+  @scnr.source_type:"aws:cloudtrail"
   eventSource:events.amazonaws.com
   eventName:(DeleteRule DisableRule)
   | groupbycount(userIdentity.arn, requestParameters.name)

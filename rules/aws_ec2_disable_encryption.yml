@@ -14,7 +14,7 @@ description: |-
   * DEV, UAT, SAT environment. You should apply this rule with PROD account only.
 severity: Medium
 query_text: |-
-  %ingest.source_type="aws:cloudtrail"
+  @scnr.source_type="aws:cloudtrail"
   eventSource="ec2.amazonaws.com"
   eventName="DisableEbsEncryptionByDefault"
   | stats

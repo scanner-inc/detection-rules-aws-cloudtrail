@@ -19,7 +19,7 @@ description: |-
 enabled: true
 severity: High
 query_text: |-
-  %ingest.source_type:"aws:cloudtrail"
+  @scnr.source_type:"aws:cloudtrail"
   eventName:ModifyImageAttribute
   requestParameters.launchPermission.add.items.group:"all"
   | groupbycount(userIdentity.arn)

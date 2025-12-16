@@ -14,7 +14,7 @@ description: |-
 enabled: true
 severity: Low
 query_text: |-
-  %ingest.source_type:"aws:cloudtrail"
+  @scnr.source_type:"aws:cloudtrail"
   (not errorCode:*)
   eventName:DeleteResolverQueryLogConfig
   | groupbycount(userIdentity.arn)

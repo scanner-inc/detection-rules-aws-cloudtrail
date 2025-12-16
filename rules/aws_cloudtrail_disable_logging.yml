@@ -11,7 +11,7 @@ description: |-
   * Valid change in a Trail
 severity: Medium
 query_text: |-
-  %ingest.source_type="aws:cloudtrail"
+  @scnr.source_type="aws:cloudtrail"
   eventSource="cloudtrail.amazonaws.com"
   eventName=(StopLogging UpdateTrail DeleteTrail)
   | stats

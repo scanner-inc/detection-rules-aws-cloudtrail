@@ -13,7 +13,7 @@ description: |-
 enabled: true
 severity: Medium
 query_text: |-
-  %ingest.source_type:"aws:cloudtrail"
+  @scnr.source_type:"aws:cloudtrail"
   eventSource:waf*.amazonaws.com
   eventName:DeleteWebACL
   (not userAgent:"\\APN\\/*")

@@ -14,7 +14,7 @@ description: |-
   * GetSigninToken events will occur when using AWS SSO portal to login and will generate false positives if you do not filter for the expected user agent(s), see filter. Non-SSO configured roles would be abnormal and should be investigated.
 severity: Medium
 query_text: |-
-  %ingest.source_type="aws:cloudtrail"
+  @scnr.source_type="aws:cloudtrail"
   eventSource="signin.amazonaws.com"
   eventName="GetSigninToken"
   (not userAgent:"Jersey/*")

@@ -13,7 +13,7 @@ description: |-
   * Administrators listing buckets, it may be necessary to filter out users who commonly conduct this activity.
 severity: Low
 query_text: |-
-  %ingest.source_type="aws:cloudtrail"
+  @scnr.source_type="aws:cloudtrail"
   eventSource="s3.amazonaws.com"
   eventName="ListBuckets"
   (not userIdentity.type="AssumedRole")

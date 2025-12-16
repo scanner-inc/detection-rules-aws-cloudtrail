@@ -13,7 +13,7 @@ description: |-
   * If known behavior is causing false positives, it can be exempted from the rule.
 severity: Low
 query_text: |-
-  %ingest.source_type="aws:cloudtrail"
+  @scnr.source_type="aws:cloudtrail"
   eventSource="glue.amazonaws.com"
   eventName=(CreateDevEndpoint DeleteDevEndpoint UpdateDevEndpoint)
   | stats

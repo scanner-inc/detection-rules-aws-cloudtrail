@@ -14,7 +14,7 @@ description: |-
   * Lambda Layer being attached from unfamiliar users should be investigated. If known behavior is causing false positives, it can be exempted from the rule.
 severity: Medium
 query_text: |-
-  %ingest.source_type="aws:cloudtrail"
+  @scnr.source_type="aws:cloudtrail"
   eventSource="lambda.amazonaws.com"
   eventName="UpdateFunctionConfiguration*"
   | stats

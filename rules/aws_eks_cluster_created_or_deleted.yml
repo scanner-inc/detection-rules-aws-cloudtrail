@@ -13,7 +13,7 @@ description: |-
   * EKS Cluster created or deleted from unfamiliar users should be investigated. If known behavior is causing false positives, it can be exempted from the rule.
 severity: Low
 query_text: |-
-  %ingest.source_type="aws:cloudtrail"
+  @scnr.source_type="aws:cloudtrail"
   eventSource="eks.amazonaws.com"
   eventName=(CreateCluster DeleteCluster)
   | stats

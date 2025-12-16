@@ -11,7 +11,7 @@ description: |-
   * Valid usage of S3 Browser for IAM User and/or AccessKey creation
 severity: High
 query_text: |-
-  %ingest.source_type="aws:cloudtrail"
+  @scnr.source_type="aws:cloudtrail"
   eventSource="iam.amazonaws.com"
   eventName=(CreateUser CreateAccessKey)
   userAgent:'S3 Browser'

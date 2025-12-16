@@ -11,7 +11,7 @@ description: |-
   * Valid change to a snapshot's permissions
 severity: Medium
 query_text: |-
-  %ingest.source_type="aws:cloudtrail"
+  @scnr.source_type="aws:cloudtrail"
   eventSource="ec2.amazonaws.com"
   eventName="ModifySnapshotAttribute"
   | stats

@@ -11,7 +11,7 @@ description: |-
   * Unknown
 severity: High
 query_text: |-
-  %ingest.source_type="aws:cloudtrail"
+  @scnr.source_type="aws:cloudtrail"
   eventSource="rds.amazonaws.com"
   eventName="RestoreDBInstanceFromDBSnapshot"
   responseElements.publiclyAccessible=true
