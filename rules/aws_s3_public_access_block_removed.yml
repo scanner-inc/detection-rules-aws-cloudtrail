@@ -9,6 +9,7 @@ description: |-
 
   1. DeleteAccountPublicAccessBlock - Direct deletion of account-level Public Access Block
   2. PutAccountPublicAccessBlock with empty configuration - Clearing the Public Access Block settings
+  3. PutAccountPublicAccessBlock with all four settings set to false - Disabling all Public Access Block protections
 
   ## Triage and response
   1. Identify the user who made this API call.
@@ -26,6 +27,13 @@ query_text: |-
     (
       eventName: PutAccountPublicAccessBlock and
       requestParameters.publicAccessBlock = ""
+    ) or
+    (
+      eventName: PutAccountPublicAccessBlock and
+      requestParameters.PublicAccessBlockConfiguration.RestrictPublicBuckets = "false" and
+      requestParameters.PublicAccessBlockConfiguration.BlockPublicAcls = "false" and
+      requestParameters.PublicAccessBlockConfiguration.BlockPublicPolicy = "false" and
+      requestParameters.PublicAccessBlockConfiguration.IgnorePublicAcls = "false"
     )
   )
   | groupbycount ( userIdentity.arn )
@@ -52,6 +60,11 @@ tests:
       {"timestamp":"2024-08-21T00:02:30.000Z","@scnr.source_type":"aws:cloudtrail","eventName":"PutAccountPublicAccessBlock","requestParameters":{"publicAccessBlock":""},"userIdentity":{"arn":"arn:aws:iam::123456789012:user/JohnDoe"},"awsRegion":"us-west-2"}
       {"timestamp":"2024-08-21T00:02:00.000Z","@scnr.source_type":"aws:cloudtrail","eventName":"GetObject","requestParameters":{"bucketName":"my-bucket","key":"exampleobject"},"userIdentity":{"arn":"arn:aws:iam::123456789012:user/JohnDoe"}}
     expected_detection_result: true
+  - name: Test alert is triggered when PutAccountPublicAccessBlock with all settings false
+    now_timestamp: "2024-08-21T00:03:00.000Z"
+    dataset_inline: |
+      {"timestamp":"2024-08-21T00:02:30.000Z","@scnr.source_type":"aws:cloudtrail","eventName":"PutAccountPublicAccessBlock","requestParameters":{"PublicAccessBlockConfiguration":{"RestrictPublicBuckets":"false","BlockPublicAcls":"false","BlockPublicPolicy":"false","IgnorePublicAcls":"false"}},"userIdentity":{"arn":"arn:aws:iam::123456789012:user/JohnDoe"},"awsRegion":"us-west-2"}
+    expected_detection_result: true
   - name: Test no alert when DeleteAccountPublicAccessBlock has error
     now_timestamp: "2024-08-21T00:03:00.000Z"
     dataset_inline: |
@@ -67,4 +80,9 @@ tests:
     dataset_inline: |
       {"timestamp":"2024-08-21T00:02:30.000Z","@scnr.source_type":"aws:cloudtrail","eventName":"GetObject","requestParameters":{"bucketName":"my-bucket","key":"exampleobject"},"userIdentity":{"arn":"arn:aws:iam::123456789012:user/JohnDoe"},"awsRegion":"us-west-2"}
       {"timestamp":"2024-08-21T00:02:00.000Z","@scnr.source_type":"aws:cloudtrail","eventName":"PutObject","requestParameters":{"bucketName":"my-bucket","key":"exampleobject"},"userIdentity":{"arn":"arn:aws:iam::123456789012:user/JohnDoe"},"awsRegion":"us-west-2"}
+    expected_detection_result: false
+  - name: Test no alert when PutAccountPublicAccessBlock with partial protection enabled
+    now_timestamp: "2024-08-21T00:03:00.000Z"
+    dataset_inline: |
+      {"timestamp":"2024-08-21T00:02:30.000Z","@scnr.source_type":"aws:cloudtrail","eventName":"PutAccountPublicAccessBlock","requestParameters":{"PublicAccessBlockConfiguration":{"RestrictPublicBuckets":"false","BlockPublicAcls":"false","BlockPublicPolicy":"false","IgnorePublicAcls":"true"}},"userIdentity":{"arn":"arn:aws:iam::123456789012:user/JohnDoe"},"awsRegion":"us-west-2"}
     expected_detection_result: false
