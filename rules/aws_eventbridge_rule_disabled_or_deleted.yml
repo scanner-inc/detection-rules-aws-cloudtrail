@@ -18,7 +18,6 @@ description: |-
       * Investigate any other unauthorized API calls made with the same credentials.
 
   **NOTE:** Tune out valid user agents that trigger this alert. For guidance, refer to relevant tuning resources.
-enabled: true
 severity: Informational
 query_text: |-
   @scnr.source_type:"aws:cloudtrail"

@@ -16,7 +16,6 @@ description: |-
       * Investigate if the same credentials were used for other unauthorized API calls.
       * Revert AMI permissions to their original state.
       * Begin your company's incident response process and investigate.
-enabled: true
 severity: High
 query_text: |-
   @scnr.source_type:"aws:cloudtrail"

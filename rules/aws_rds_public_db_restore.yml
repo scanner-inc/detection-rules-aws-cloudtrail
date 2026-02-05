@@ -1,6 +1,5 @@
 # schema: https://scanner.dev/schema/scanner-detection-rule.v1.json
 name: Restore Public AWS RDS Instance
-enabled: true
 description: |-
   Detects the recovery of a new public database instance from a snapshot. It may be a part of data exfiltration.
 

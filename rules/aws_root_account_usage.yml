@@ -1,6 +1,5 @@
 # schema: https://scanner.dev/schema/scanner-detection-rule.v1.json
 name: AWS Root Credentials
-enabled: true
 description: |-
   Detects AWS root account usage
 

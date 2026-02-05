@@ -16,7 +16,6 @@ description: |-
   3. If the API call was made by the user:
     - Verify if the user should be making this API call.
     - If not, check for other API calls made by the user to assess if further investigation is necessary.
-enabled: true
 severity: Low
 query_text: |-
   @scnr.source_type:"aws:cloudtrail"

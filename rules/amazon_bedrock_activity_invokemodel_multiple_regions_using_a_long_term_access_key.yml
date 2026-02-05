@@ -16,7 +16,6 @@ description: |-
      * Check the User Investigation dashboard for other actions taken by the user (the user's ARN).
      * Check the IP Investigation dashboard for additional traffic from the IP (the client IP).
   4. If the triage results suggest an attacker is involved, initiate the incident response process and investigation.
-enabled: true
 severity: Medium
 query_text: |-
   @scnr.source_type:"aws:cloudtrail"

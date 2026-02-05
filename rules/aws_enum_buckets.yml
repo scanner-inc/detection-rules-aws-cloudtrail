@@ -1,6 +1,5 @@
 # schema: https://scanner.dev/schema/scanner-detection-rule.v1.json
 name: Potential Bucket Enumeration on AWS
-enabled: true
 description: |-
   Looks for potential enumeration of AWS buckets via ListBuckets.
 

@@ -10,7 +10,6 @@ description: |-
   ## Triage & Response
   1. Verify that the image ID is a valid SHA256 hash for the container image with the specified tag in the designated repository on the AWS account.
   2. If the hash is invalid, investigate whether the container image was uploaded for malicious reasons.
-enabled: true
 severity: Informational
 query_text: |-
   @scnr.source_type:"aws:cloudtrail"

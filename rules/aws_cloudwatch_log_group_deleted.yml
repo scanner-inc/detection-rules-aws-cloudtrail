@@ -13,7 +13,6 @@ description: |-
       * Verify that the user making this API call is authorized in your environment.
       * Consider adding the log group name to a suppression list.
   3. If it is not for auditing or security, initiate your company's incident response process and investigate.
-enabled: true
 severity: Low
 query_text: |-
   @scnr.source_type:"aws:cloudtrail"

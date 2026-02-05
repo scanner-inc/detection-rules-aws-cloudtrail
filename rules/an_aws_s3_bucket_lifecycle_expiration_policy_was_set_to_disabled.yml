@@ -10,7 +10,6 @@ description: |-
   ## Triage & Response
   1. Determine if the event should have occurred on the specified bucket by the identified user and account.
   2. If the bucket should not be disabled, escalate to engineering for re-enablement.
-enabled: true
 severity: Informational
 query_text: |-
   (not errorCode:*)

@@ -20,7 +20,6 @@ description: |-
      * Communicate with the user to confirm if this was a planned action.
      * If not planned, review other API calls by the user for further investigation.
      * Initiate your company's incident response process.
-enabled: true
 severity: High
 query_text: |-
   @scnr.source_type:"aws:cloudtrail"

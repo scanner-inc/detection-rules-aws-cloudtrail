@@ -16,7 +16,6 @@ description: |-
      * Check the User Investigation dashboard for other actions taken by the user.
      * Check the IP Investigation dashboard for additional traffic from the client's IP.
   5. If an attack is suspected, initiate the company's incident response process and conduct further investigation.
-enabled: true
 severity: Low
 query_text: |-
   @scnr.source_type:"aws:cloudtrail"

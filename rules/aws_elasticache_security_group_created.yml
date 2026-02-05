@@ -1,6 +1,5 @@
 # schema: https://scanner.dev/schema/scanner-detection-rule.v1.json
 name: AWS ElastiCache Security Group Created
-enabled: true
 description: |-
   Detects when an ElastiCache security group has been created.
 

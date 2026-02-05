@@ -15,7 +15,6 @@ description: |-
      - Check the user investigation dashboard for other actions taken by the user.
      - Investigate the IP for any unusual traffic patterns.
   4. If evidence suggests an attack, initiate the incident response process and conduct a thorough investigation.
-enabled: true
 severity: Medium
 query_text: |-
   @scnr.source_type:"aws:cloudtrail"

@@ -1,6 +1,5 @@
 # schema: https://scanner.dev/schema/scanner-detection-rule.v1.json
 name: AWS EC2 Disable EBS Encryption
-enabled: true
 description: |-
   Identifies disabling of default Amazon Elastic Block Store (EBS) encryption in the current region.
   Disabling default encryption does not change the encryption status of your existing volumes.

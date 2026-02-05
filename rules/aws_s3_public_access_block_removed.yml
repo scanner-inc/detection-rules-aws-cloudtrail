@@ -17,7 +17,6 @@ description: |-
   3. Re-enable Public Access Block on the S3 bucket.
 
   More details on S3 Public Block Public Access can be found [here](https://docs.aws.amazon.com/AmazonS3/latest/dev/access-control-block-public-access.html).
-enabled: true
 severity: High
 query_text: |-
   @scnr.source_type:"aws:cloudtrail"

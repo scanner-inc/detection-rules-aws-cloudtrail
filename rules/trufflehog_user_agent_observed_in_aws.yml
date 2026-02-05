@@ -14,7 +14,6 @@ description: |-
       * If necessary, disable or rotate the affected credential.
       * Investigate any actions taken by the identity.
       * Collaborate with relevant teams to remove the key from source code repositories.
-enabled: true
 severity: High
 query_text: |-
   @scnr.source_type:"aws:cloudtrail"

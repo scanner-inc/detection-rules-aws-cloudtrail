@@ -21,7 +21,6 @@ description: |-
   3. If the call was unauthorized:
      * Rotate the user's credentials and investigate other API calls they made.
      * Identify additional API calls made by the user that were not authorized.
-enabled: true
 severity: Informational
 query_text: |-
   @scnr.source_type:"aws:cloudtrail"

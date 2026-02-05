@@ -1,6 +1,5 @@
 # schema: https://scanner.dev/schema/scanner-detection-rule.v1.json
 name: AWS Attached Malicious Lambda Layer
-enabled: true
 description: |-
   Detects when an user attached a Lambda layer to an existing function to override a library that is in use by the function, where their malicious code could utilize the function's IAM role for AWS API calls.
   This would give an adversary access to the privileges associated with the Lambda service role that is attached to that function.

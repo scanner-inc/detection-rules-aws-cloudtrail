@@ -14,7 +14,6 @@ description: |-
     * Remove the newly created cluster and any associated tasks or services.
     * Investigate what other API calls were made by the user.
     * Initiate your organization's incident response process.
-enabled: true
 severity: High
 query_text: |-
   @scnr.source_type:"aws:cloudtrail"

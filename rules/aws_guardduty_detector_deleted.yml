@@ -15,7 +15,6 @@ description: |-
   3. If the user did not make the call:
       * Rotate the credentials.
       * Investigate any other unauthorized API calls made with the same credentials.
-enabled: true
 severity: High
 query_text: |-
   @scnr.source_type:"aws:cloudtrail"

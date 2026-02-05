@@ -16,7 +16,6 @@ description: |-
      * Initiate your organization's incident response process.
   3. If the API call was legitimate:
      * Ensure that using an IAM Roles Anywhere trust anchor is appropriate for the resource.
-enabled: true
 severity: High
 query_text: |-
   @scnr.source_type:"aws:cloudtrail"

@@ -12,7 +12,6 @@ description: |-
   ## Triage & Response
   1. Determine if the event should have occurred on the specified bucket by the username, account ID, and type, and verify that the bucket has a file expiration of less than 90 days.
   2. If the bucket is the CloudTrail bucket, consider escalating to higher severity and investigating further.
-enabled: true
 severity: Low
 query_text: |-
   eventName:PutBucketLifecycle

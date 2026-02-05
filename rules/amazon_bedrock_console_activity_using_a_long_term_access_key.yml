@@ -15,7 +15,6 @@ description: |-
      * Investigate the user's other actions.
      * Check for additional traffic from the specified IP address.
   4. If evidence suggests an attack, initiate the incident response process and conduct further investigation.
-enabled: true
 severity: High
 query_text: |-
   @scnr.source_type:"aws:cloudtrail"

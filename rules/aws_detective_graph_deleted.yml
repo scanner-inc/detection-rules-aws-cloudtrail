@@ -13,7 +13,6 @@ description: |-
   3. If the deletion was unauthorized:
      * Rotate the credentials.
      * Investigate for any other unauthorized API calls made with the same credentials.
-enabled: true
 severity: Medium
 query_text: |-
   @scnr.source_type:"aws:cloudtrail"

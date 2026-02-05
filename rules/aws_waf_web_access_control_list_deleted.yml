@@ -10,7 +10,6 @@ description: |-
   ## Triage and response
   1. Determine if the user's identity is expected to perform the "DeleteWebACL" API call on the account.
   2. If the API call was not made by the user, rotate the user credentials and investigate what other APIs were successfully accessed.
-enabled: true
 severity: Medium
 query_text: |-
   @scnr.source_type:"aws:cloudtrail"

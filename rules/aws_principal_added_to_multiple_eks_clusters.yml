@@ -17,7 +17,6 @@ description: |-
   4. If the API calls were made by the user:
      * Evaluate if the user should be granting access to the cluster.
      * If not, investigate other API calls made by the user for further implications.
-enabled: true
 severity: Low
 query_text: |-
   @scnr.source_type:"aws:cloudtrail"

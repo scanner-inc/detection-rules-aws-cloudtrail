@@ -15,7 +15,6 @@ description: |-
      * Check the user investigation dashboard for other actions taken by the user.
      * Check the IP investigation dashboard for additional traffic from the IP.
   4. If the triage results suggest an attack, initiate your company's incident response process and investigation.
-enabled: true
 severity: High
 query_text: |-
   @scnr.source_type:"aws:cloudtrail"

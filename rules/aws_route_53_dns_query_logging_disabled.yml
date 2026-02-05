@@ -11,7 +11,6 @@ description: |-
   1. Determine if the user identity is expected to perform the "DeleteResolverQueryLogConfig" API call.
   2. Contact the principal owner to verify if the API call was initiated by the user.
   3. If the API call was not user-initiated, rotate user credentials and investigate other successfully accessed APIs.
-enabled: true
 severity: Low
 query_text: |-
   @scnr.source_type:"aws:cloudtrail"

@@ -1,6 +1,5 @@
 # schema: https://scanner.dev/schema/scanner-detection-rule.v1.json
 name: AWS Route 53 Domain Transferred to Another Account
-enabled: true
 description: |-
   Detects when a request has been made to transfer a Route 53 domain to another AWS account.
 

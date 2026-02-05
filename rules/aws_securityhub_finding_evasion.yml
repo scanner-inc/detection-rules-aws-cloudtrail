@@ -1,6 +1,5 @@
 # schema: https://scanner.dev/schema/scanner-detection-rule.v1.json
 name: AWS SecurityHub Findings Evasion
-enabled: true
 description: |-
   Detects the modification of the findings on SecurityHub.
 

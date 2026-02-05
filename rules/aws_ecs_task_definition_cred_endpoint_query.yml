@@ -1,6 +1,5 @@
 # schema: https://scanner.dev/schema/scanner-detection-rule.v1.json
 name: AWS ECS Task Definition That Queries The Credential Endpoint
-enabled: true
 description: |-
   Detects when an Elastic Container Service (ECS) Task Definition includes a command to query the credential endpoint.
   This can indicate a potential adversary adding a backdoor to establish persistence or escalate privileges.

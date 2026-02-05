@@ -17,7 +17,6 @@ description: |-
      * Check if the user was authorized for this change.
      * If authorized, consider adding the event bus name to a suppression list.
      * If not authorized, re-enable or create a rule as previously mentioned and initiate your incident response process to investigate.
-enabled: true
 severity: Informational
 query_text: |-
   @scnr.source_type:"aws:cloudtrail"

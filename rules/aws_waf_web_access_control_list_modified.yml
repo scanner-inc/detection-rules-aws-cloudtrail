@@ -10,7 +10,6 @@ description: |-
   ## Triage and response
   1. Verify if the user identity is authorized to perform the "UpdateWebACL" API call on the account.
   2. If the API call was unauthorized, rotate the user's credentials and investigate other successfully accessed APIs.
-enabled: true
 severity: Low
 query_text: |-
   @scnr.source_type:"aws:cloudtrail"

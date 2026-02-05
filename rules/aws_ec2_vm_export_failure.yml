@@ -1,6 +1,5 @@
 # schema: https://scanner.dev/schema/scanner-detection-rule.v1.json
 name: AWS EC2 VM Export Failure
-enabled: true
 description: |-
   An attempt to export an AWS EC2 instance has been detected. A VM Export might indicate an attempt to extract information from an instance.
 

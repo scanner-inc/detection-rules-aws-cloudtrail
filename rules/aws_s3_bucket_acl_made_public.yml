@@ -23,7 +23,6 @@ description: |-
   3. If the API call was unauthorized, rotate the user credentials and investigate other successful API accesses:
      * Rotate the credentials.
      * Check for other unauthorized API calls with the same credentials.
-enabled: true
 severity: High
 query_text: |-
   @scnr.source_type:"aws:cloudtrail"

@@ -16,7 +16,6 @@ description: |-
       * Investigate other potential unauthorized API calls.
       * Revert AMI permissions to the original state.
       * Initiate the incident response process.
-enabled: true
 severity: High
 query_text: |-
   @scnr.source_type:"aws:cloudtrail"

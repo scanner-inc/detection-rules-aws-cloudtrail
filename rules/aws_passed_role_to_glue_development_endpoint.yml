@@ -1,6 +1,5 @@
 # schema: https://scanner.dev/schema/scanner-detection-rule.v1.json
 name: AWS Glue Development Endpoint Activity
-enabled: true
 description: |-
   Detects possible suspicious glue development endpoint activity.
 

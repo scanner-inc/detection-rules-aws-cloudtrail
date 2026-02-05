@@ -12,7 +12,6 @@ description: |-
   2. If the API call was not made by the user, rotate the user credentials and investigate other successfully accessed APIs.
      * Rotate the credentials.
      * Investigate if the same credentials made other unauthorized API calls.
-enabled: true
 severity: Medium
 query_text: |-
   @scnr.source_type:"aws:cloudtrail"

@@ -10,7 +10,6 @@ description: |-
   ## Triage and Response
   1. Review past activity and API calls made by the compromised identity.
   2. Initiate your company's incident response process and conduct an investigation.
-enabled: true
 severity: Critical
 query_text: |-
   @scnr.source_type:"aws:cloudtrail"

@@ -13,7 +13,6 @@ description: |-
   3. Re-enable EBS encryption by default.
 
   For more information about Amazon EBS Encryption, refer to the Amazon EBS Encryption documentation.
-enabled: true
 severity: Medium
 query_text: |-
   @scnr.source_type:"aws:cloudtrail"

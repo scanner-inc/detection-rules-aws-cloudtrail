@@ -1,6 +1,5 @@
 # schema: https://scanner.dev/schema/scanner-detection-rule.v1.json
 name: AWS Config Disabling Channel/Recorder
-enabled: true
 description: |-
   Detects AWS Config Service disabling
 

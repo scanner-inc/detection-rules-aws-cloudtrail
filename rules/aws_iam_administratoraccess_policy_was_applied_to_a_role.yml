@@ -16,7 +16,6 @@ description: |-
   3. If the API call was legitimate:
     * Assess whether the role needs the AdministratorAccess policy for its functions.
     * Recommend the user find a least privileged policy that meets the role's operational requirements.
-enabled: true
 severity: Medium
 query_text: |-
   @scnr.source_type:"aws:cloudtrail"
