@@ -1,5 +1,5 @@
 # schema: https://scanner.dev/schema/scanner-detection-rule.v1.json
-name: AWS Attached Malicious Lambda Layer
+name: AWS Possible Malicious Lambda Layer Attached
 description: |-
   Detects when an user attached a Lambda layer to an existing function to override a library that is in use by the function, where their malicious code could utilize the function's IAM role for AWS API calls.
   This would give an adversary access to the privileges associated with the Lambda service role that is attached to that function.
@@ -16,6 +16,8 @@ query_text: |-
   @scnr.source_type="aws:cloudtrail"
   eventSource="lambda.amazonaws.com"
   eventName="UpdateFunctionConfiguration*"
+  requestParameters.layers[*]:*
+  (not errorCode:*)
   | stats
     min(@scnr.datetime) as firstTime,
     max(@scnr.datetime) as lastTime,
@@ -34,3 +36,25 @@ tags:
 - tactics.ta0004.privilege_escalation
 - techniques.t1574.hijack_execution_flow
 - source.cloudtrail
+tests:
+  - name: Test alert is triggered when UpdateFunctionConfiguration attaches a layer
+    now_timestamp: "2024-08-21T00:03:00.000Z"
+    dataset_inline: |
+      {"timestamp":"2024-08-21T00:02:30.000Z","@scnr.source_type":"aws:cloudtrail","eventSource":"lambda.amazonaws.com","eventName":"UpdateFunctionConfiguration20150331v2","requestParameters":{"functionName":"my-function","layers":["arn:aws:lambda:us-west-2:123456789012:layer:my-layer:1"]},"userIdentity":{"arn":"arn:aws:iam::123456789012:user/JohnDoe"},"awsRegion":"us-west-2"}
+    expected_detection_result: true
+  - name: Test no alert when UpdateFunctionConfiguration does not include layers (e.g. kMSKeyArn edit)
+    now_timestamp: "2024-08-21T00:03:00.000Z"
+    dataset_inline: |
+      {"timestamp":"2024-08-21T00:02:30.000Z","@scnr.source_type":"aws:cloudtrail","eventSource":"lambda.amazonaws.com","eventName":"UpdateFunctionConfiguration20150331v2","requestParameters":{"functionName":"my-function","kMSKeyArn":"arn:aws:kms:us-west-2:123456789012:key/abcd1234"},"userIdentity":{"arn":"arn:aws:iam::123456789012:user/JohnDoe"},"awsRegion":"us-west-2"}
+    expected_detection_result: false
+  - name: Test no alert when UpdateFunctionConfiguration call errored
+    now_timestamp: "2024-08-21T00:03:00.000Z"
+    dataset_inline: |
+      {"timestamp":"2024-08-21T00:02:30.000Z","@scnr.source_type":"aws:cloudtrail","eventSource":"lambda.amazonaws.com","eventName":"UpdateFunctionConfiguration20150331v2","requestParameters":{"functionName":"my-function","layers":["arn:aws:lambda:us-west-2:123456789012:layer:my-layer:1"]},"errorCode":"AccessDenied","userIdentity":{"arn":"arn:aws:iam::123456789012:user/JohnDoe"},"awsRegion":"us-west-2"}
+    expected_detection_result: false
+  - name: Test no alert on unrelated Lambda events
+    now_timestamp: "2024-08-21T00:03:00.000Z"
+    dataset_inline: |
+      {"timestamp":"2024-08-21T00:02:30.000Z","@scnr.source_type":"aws:cloudtrail","eventSource":"lambda.amazonaws.com","eventName":"CreateFunction20150331","requestParameters":{"functionName":"my-function"},"userIdentity":{"arn":"arn:aws:iam::123456789012:user/JohnDoe"},"awsRegion":"us-west-2"}
+      {"timestamp":"2024-08-21T00:02:00.000Z","@scnr.source_type":"aws:cloudtrail","eventSource":"lambda.amazonaws.com","eventName":"UpdateFunctionCode20150331v2","requestParameters":{"functionName":"my-function"},"userIdentity":{"arn":"arn:aws:iam::123456789012:user/JohnDoe"},"awsRegion":"us-west-2"}
+    expected_detection_result: false
