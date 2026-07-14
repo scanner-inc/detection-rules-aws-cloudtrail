@@ -15,15 +15,17 @@ severity: Medium
 query_text: |-
   @scnr.source_type="aws:cloudtrail"
   (
-    eventSource=sts.amazonaws.com
-    and
-    eventName=AssumeRoleWithSAML
-  )
-  or
-  (
-    eventSource=iam.amazonaws.com
-    and
-    eventName=UpdateSAMLProvider
+    (
+      eventSource=sts.amazonaws.com
+      and
+      eventName=AssumeRoleWithSAML
+    )
+    or
+    (
+      eventSource=iam.amazonaws.com
+      and
+      eventName=UpdateSAMLProvider
+    )
   )
   | stats
     min(@scnr.datetime) as firstTime,
