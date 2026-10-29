@@ -17,7 +17,8 @@ query_text: |-
   @scnr.source_type:"aws:cloudtrail"
   eventSource:firehose.amazonaws.com
   eventName:UpdateDestination
-  (not userAgent:(cloudformation.amazonaws.com APN\\/*))
+  (not userAgent:cloudformation.amazonaws.com)
+  (not userAgent="APN/*")
   | groupbycount(requestParameters.deliveryStreamName)
   | where @q.count > 0
 time_range_s: 300
@@ -28,3 +29,14 @@ tags:
 - source.cloudtrail
 - techniques.t1562.impair_defenses
 - tactics.ta0005.defense_evasion
+tests:
+  - name: Test no alert for Terraform (APN user agent)
+    now_timestamp: "2024-08-21T00:03:00.000Z"
+    dataset_inline: |
+      {"timestamp":"2024-08-21T00:02:30.000Z","@scnr.source_type":"aws:cloudtrail","eventSource":"firehose.amazonaws.com","eventName":"UpdateDestination","userAgent":"APN/1.0 HashiCorp/1.0 Terraform/1.5.7 (+https://www.terraform.io) terraform-provider-aws/5.31.0","userIdentity":{"arn":"arn:aws:iam::123456789012:user/JohnDoe"},"awsRegion":"us-west-2","requestParameters":{"deliveryStreamName":"my-stream"}}
+    expected_detection_result: false
+  - name: Test alert for normal user agent
+    now_timestamp: "2024-08-21T00:03:00.000Z"
+    dataset_inline: |
+      {"timestamp":"2024-08-21T00:02:30.000Z","@scnr.source_type":"aws:cloudtrail","eventSource":"firehose.amazonaws.com","eventName":"UpdateDestination","userAgent":"aws-cli/2.15.0 Python/3.11.6 Darwin/23.1.0","userIdentity":{"arn":"arn:aws:iam::123456789012:user/JohnDoe"},"awsRegion":"us-west-2","requestParameters":{"deliveryStreamName":"my-stream"}}
+    expected_detection_result: true
